@@ -1,5 +1,4 @@
-from distutils.log import debug
-from flask import Flask
+from flask import Flask,render_template
 
 
 from dotenv import load_dotenv
@@ -17,7 +16,17 @@ def create_app():
 
     db.init_app(app)
 
+    @app.route("/",methods=['GET',"POST"])
+    def index():
+        return "<h1>Hello world </h1>"
 
+    @app.route("/login",methods=['GET',"POST"])
+    def login():
+        return render_template("auth/login.html")
+
+    @app.route("/register",methods=['GET',"POST"])
+    def register():
+        return render_template("auth/register.html")
 
     return app
 

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+
+{% block head %}
+
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/auth.css')}}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="form-container">
+    <form method="POST" id="form">
+        <h1>Register</h1>
+        <hr>
+        <br>
+        <br>
+        <h1>User</h1>
+        <div class="input-container">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username">
+        </div>
+        <div class="input-container">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+        </div>
+
+        <h1>Personal data</h1>
+
+        <div class="input-container">
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name">
+        </div>
+        <div class="input-container">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name">
+        </div>
+
+        <div class="input-container">
+            <label for="nationality">Nationality</label>
+            <input type="text" id="nationality" name="nationality">
+        </div>
+        <div class="input-container">
+            <label for="birth_date">Birth date</label>
+            <input type="date" id="birth_date" name="birth_date">
+        </div>
+
+        <div class="input-container">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone">
+        </div>
+
+        
+        <button type="submit">Registrarse</button>
+    </form>
+</div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+{% endblock %}
