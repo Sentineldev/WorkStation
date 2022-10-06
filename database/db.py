@@ -1,11 +1,11 @@
-import pathlib
 import mysql.connector as database
 from .utils import read_file
 from flask import g,current_app
 from flask.cli import with_appcontext
 import click
-import os
 import sys
+
+from pprint import pprint
 
 
 def get_db() -> tuple:
@@ -49,9 +49,12 @@ def init_db() -> None:
 
     try:
         db, cursor = get_db()
-        sql_ddl = read_file(path)
-        cursor.execute(sql_ddl)
-        db.commit()
+        sql_ddl = read_file(path).split(";")
+        
+        for query in sql_ddl:
+            cursor.execute(query.strip())
+            db.commit()
+        
     except Exception as ex:
         raise Exception(ex)
 
