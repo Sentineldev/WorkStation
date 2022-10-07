@@ -5,7 +5,6 @@ from flask.cli import with_appcontext
 import click
 import sys
 
-from pprint import pprint
 
 
 def get_db() -> tuple:
