@@ -25,11 +25,12 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user is None:
             flash("Wrong credentials")
-        
-        elif check_password_hash(user.password,password): #checking if the hashed password matches with the password
-            session.clear()
-            session['current_user'] = user.toDict()
-            return redirect(url_for('home'))
+        elif not check_password_hash(user.password,password) : #checking if the hashed password matches with the password
+            flash("Wrong credentials")
+        else:
+            session.clear()  #clearing if there is any previous session
+            session['current_user'] = user.toDict() #setting the new user in the session.
+            return redirect(url_for('home')) 
         
         
     return render_template("auth/login.html")
