@@ -6,9 +6,35 @@
 
 html{
     font-size: 62.5%;
+    font-family: 'Ubuntu', sans-serif
 }
 
 
 body{
-    height: 100vh;    
+    min-height: 100vh;
+    height: 100vh;   
+    background-color: #eeee;
+}
+
+
+.title-h1{
+    color: whitesmoke;
+    text-align: center;
+    font-size: clamp(2rem, 2.5vw, 2.4rem);
+}
+.title-h2{
+    font-size: clamp(1.6rem, 2.5vw, 1.8rem);
+}
+
+
+.flash-message-container{
+    background: rgba(170, 170, 170, 0.283);
+    box-shadow: 0px 0px 2px #aaaa;
+    border: 1px solid #aaaa;
+    padding: 1rem 0.8rem;
+    border-radius: 0.3rem;
+}
+
+.flash-message{
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
 }

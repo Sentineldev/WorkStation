@@ -1,11 +1,12 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,url_for,redirect
 
 from dotenv import load_dotenv
 from config  import Config
 
 from database.database import init_app,db
 
-
+import sqlalchemy
+from routes import Auth
 from models.User import Person
 
 def create_app():
@@ -30,40 +31,15 @@ def create_app():
     init_app(app)
 
 
+    app.register_blueprint(Auth.bp)
+
 
     @app.route("/",methods=['GET',"POST"])
     def index():
 
-        """
-        
-        TESTING THE ORM.
-        
-        """
 
-        person = db.get_or_404(Person,1)
-        print(person)
-        return "<h1>Hello world </h1>"
+        return redirect(url_for('auth.login'))
 
-    @app.route("/login",methods=['GET',"POST"])
-    def login() -> str:
-        """
-        RETURNS HTML with a login screen.
-        
-        
-        """
-
-        return render_template("auth/login.html")
-
-    @app.route("/register",methods=['GET',"POST"])
-    def register() -> str:
-        
-        """
-        RETURNS HTML with a register screen.
-        
-        """
-
-
-        return render_template("auth/register.html")
 
     return app
 

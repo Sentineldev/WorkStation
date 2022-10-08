@@ -5,25 +5,43 @@
 {% block head %}
 
 <link rel="stylesheet" href="{{url_for('static',filename='CSS/auth.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/login.css')}}">
 
 {% endblock %}
 
 
 {% block content %}
 
-<div class="form-container">
-    <form method="POST" id="form">
-        <h1>Login</h1>
-        <div class="input-container">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username">
+<div id="form-container">
+    <form id="login-form" action="/auth/login" method="POST">
+    
+        <div class="header-container">
+            <h1 class="title-h1">Login</h1>
         </div>
         <div class="input-container">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
+            <label for="username" class="input-label">Username</label>
+            <input name="username" id="username" type="text" class="input-entry">
+        </div>
+        <div class="input-container">
+            <label for="password" class="input-label">Password</label>
+            <input name="password" id="password" type="password" class="input-entry">
+        </div>
+    
+        <div class="input-container">
+            <button class="button" type="submit">Ingresar</button>
         </div>
         
-        <button type="submit">Ingresar</button>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message-container">
+                <p class="flash-message">{{message}}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
     </form>
 </div>
 

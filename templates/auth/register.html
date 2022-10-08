@@ -5,55 +5,80 @@
 {% block head %}
 
 <link rel="stylesheet" href="{{url_for('static',filename='CSS/auth.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/register.css')}}">
 
 {% endblock %}
 
 
 {% block content %}
 
-<div class="form-container">
-    <form method="POST" id="form">
-        <h1>Register</h1>
-        <hr>
-        <br>
-        <br>
-        <h1>User</h1>
-        <div class="input-container">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username">
-        </div>
-        <div class="input-container">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password">
+<div id="form-container">
+    <form id="login-form" action="/auth/register" method="POST">
+    
+        <div class="header-container">
+            <h1 class="title-h1">Login</h1>
         </div>
 
-        <h1>Personal data</h1>
 
-        <div class="input-container">
-            <label for="first_name">First Name</label>
-            <input type="text" id="first_name" name="first_name">
-        </div>
-        <div class="input-container">
-            <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" name="last_name">
+        <div class="text-container">
+            <h2 class="title-h2">Account</h2>
         </div>
 
-        <div class="input-container">
-            <label for="nationality">Nationality</label>
-            <input type="text" id="nationality" name="nationality">
+        <div class="form-grid">
+            <div class="input-container">
+                <label for="username" class="input-label">Username</label>
+                <input name="username" id="username" type="text" class="input-entry">
+            </div>
+            <div class="input-container">
+                <label for="password" class="input-label">Password</label>
+                <input name="password" id="password" type="password" class="input-entry">
+            </div>
         </div>
-        <div class="input-container">
-            <label for="birth_date">Birth date</label>
-            <input type="date" id="birth_date" name="birth_date">
+        <div class="text-container">
+            <h2 class="title-h2">Personal Data</h2>
         </div>
 
-        <div class="input-container">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone">
-        </div>
+        <div class="form-grid">
+            <div class="input-container">
+                <label for="name" class="input-label">Name</label>
+                <input name="name" id="name" type="text" class="input-entry">
+            </div>
+            <div class="input-container">
+                <label for="last_name" class="input-label">Last Name</label>
+                <input name="last_name" id="last_name" type="text" class="input-entry">
+            </div>
 
+            <div class="input-container">
+                <label for="country" class="input-label">Country</label>
+                <input name="country" id="country" type="text" class="input-entry">
+            </div>
+            <div class="input-container">
+                <label for="birth_date" class="input-label">Birth date</label>
+                <input name="birth_date" id="birth_date" type="date" class="input-entry">
+            </div>
+
+            <div class="input-container">
+                <label for="phone" class="input-label">Phone</label>
+                <input name="phone" id="phone" type="tel" class="input-entry">
+            </div>
+            
+        </div>
+        <div class="button-container">
+            <button class="button" type="submit">Registrarse</button>
+        </div>
+       
         
-        <button type="submit">Registrarse</button>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message-container">
+                <p class="flash-message">{{message}}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
     </form>
 </div>
 
