@@ -32,6 +32,10 @@
         </div>
         
 
+        <div class="text-container">
+            <a class="form-link" href="{{url_for('auth.register')}}">Not have an account? Register here.</a>
+        </div>
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}

@@ -18,8 +18,6 @@ body{
 
 
 .title-h1{
-    color: whitesmoke;
-    text-align: center;
     font-size: clamp(2rem, 2.5vw, 2.4rem);
 }
 .title-h2{

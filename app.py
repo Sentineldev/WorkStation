@@ -1,4 +1,4 @@
-from flask import Flask,url_for,redirect
+from flask import Flask,url_for,redirect,session,render_template
 
 from dotenv import load_dotenv
 from config  import Config
@@ -7,7 +7,6 @@ from database.database import init_app
 
 from routes import Auth
 
-from models.models import Person
 def create_app():
 
 
@@ -38,6 +37,11 @@ def create_app():
 
 
         return redirect(url_for('auth.login'))
+
+    @app.route("/home",methods=['GET'])
+    def home():
+        user = session.get("current_user")
+        return render_template("home/home.html",user=user)
 
 
     return app

@@ -21,7 +21,11 @@
 }
 
 .button{
-    margin-bottom: 4rem;
+    margin-bottom: 0;
+}
+
+.text-container{
+    padding: 1rem 2rem;
 }
 
 .flash-message-container{

@@ -61,10 +61,18 @@
                 <label for="phone" class="input-label">Phone</label>
                 <input name="phone" id="phone" type="tel" class="input-entry">
             </div>
+            <div class="input-container">
+                <label for="email" class="input-label">Email</label>
+                <input name="email" id="email" type="email" class="input-entry">
+            </div>
             
         </div>
         <div class="button-container">
             <button class="button" type="submit">Registrarse</button>
+        </div>
+
+        <div class="text-container">
+            <a class="form-link" href="{{url_for('auth.login')}}">Already have an account? Log in</a>
         </div>
        
         

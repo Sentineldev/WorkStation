@@ -15,7 +15,7 @@
 }
 
 .text-container{
-    padding: 0 1rem;
+    padding: 1rem 1rem;
 }
 
 .form-grid{
@@ -37,6 +37,11 @@
 
 .form-grid,.button-container{
     padding: 1rem;
+}
+
+.flash-message-container{
+    margin: 1rem;
+    margin-top: 1rem;
 }
 
 @media(max-width:600px){
