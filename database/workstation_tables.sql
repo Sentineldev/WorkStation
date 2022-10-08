@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS person(
 person_id INT AUTO_INCREMENT PRIMARY KEY,
 first_name VARCHAR(20) NOT NULL,
 last_name VARCHAR(20) NOT NULL,
-nationality VARCHAR(30) NOT NULL,
+country VARCHAR(30) NOT NULL,
 birthdate DATE NOT NULL
 );
 

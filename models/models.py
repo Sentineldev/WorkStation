@@ -5,7 +5,7 @@ class Person(db.Model):
         person_id = db.Column(db.Integer, primary_key=True)
         first_name = db.Column(db.String(20), nullable=False)
         last_name = db.Column(db.String(20), nullable=False)
-        nationality = db.Column(db.String(30), nullable=False)
+        country = db.Column(db.String(30), nullable=False)
         birthdate = db.Column(db.DateTime, nullable=False)
         phones = db.relationship('Phone', backref= 'person', lazy= True)
         
