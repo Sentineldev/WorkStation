@@ -7,8 +7,8 @@ birthdate DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS phone(
-person_id INT REFERENCES person (person_id),
-phone_number VARCHAR(15) PRIMARY KEY
+phone_number VARCHAR(15) PRIMARY KEY,
+person_id INT REFERENCES person (person_id)
 );
 
 CREATE TABLE IF NOT EXISTS user(

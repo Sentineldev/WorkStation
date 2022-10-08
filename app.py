@@ -6,7 +6,7 @@ from config  import Config
 from database.database import init_app,db
 
 
-from models.User import Person
+from models.models import Person
 
 def create_app():
 
