@@ -2,13 +2,13 @@ CREATE TABLE IF NOT EXISTS person(
 person_id INT AUTO_INCREMENT PRIMARY KEY,
 first_name VARCHAR(20) NOT NULL,
 last_name VARCHAR(20) NOT NULL,
-nationality VARCHAR(30) NOT NULL,
+country VARCHAR(30) NOT NULL,
 birthdate DATE NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS phone(
-person_id INT REFERENCES person (person_id),
-phone_number VARCHAR(15) PRIMARY KEY
+phone_number VARCHAR(15) PRIMARY KEY,
+person_id INT REFERENCES person (person_id)
 );
 
 CREATE TABLE IF NOT EXISTS user(

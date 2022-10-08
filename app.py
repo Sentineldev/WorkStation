@@ -1,14 +1,13 @@
-from flask import Flask,render_template,url_for,redirect
+from flask import Flask,url_for,redirect
 
 from dotenv import load_dotenv
 from config  import Config
 
-from database.database import init_app,db
+from database.database import init_app
 
-import sqlalchemy
 from routes import Auth
-from models.User import Person
 
+from models.models import Person
 def create_app():
 
 
