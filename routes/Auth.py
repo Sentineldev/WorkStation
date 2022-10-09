@@ -1,4 +1,6 @@
-from flask import Blueprint,render_template,request,flash,session,redirect,url_for
+from flask import Blueprint,render_template,request,flash,redirect,url_for
+
+from flask_login import login_user,logout_user,current_user
 from werkzeug.security import check_password_hash,generate_password_hash
 
 from database.database import db
@@ -10,12 +12,13 @@ bp = Blueprint("auth",__name__,url_prefix="/auth")
 
 @bp.route("/login",methods=['GET','POST'])
 def login():
-    session.clear()
+
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     if request.method == "POST":
         #obtaining form data.
         username = request.form['username']
         password = request.form['password'] 
-
 
         """
         First querying a row from the database with the given credentials
@@ -28,8 +31,10 @@ def login():
         elif not check_password_hash(user.password,password) : #checking if the hashed password matches with the password
             flash("Wrong credentials")
         else:
-            session.clear()  #clearing if there is any previous session
-            session['current_user'] = user.toDict() #setting the new user in the session.
+            """
+            login user.
+            """
+            login_user(user)
             return redirect(url_for('home')) 
         
         
@@ -103,3 +108,17 @@ def register():
             flash("User registered successfully")
 
     return render_template("auth/register.html")
+
+
+
+
+
+
+"""
+closing the current session.
+
+"""
+@bp.route("/logout",methods=['GET'])
+def logout():
+    logout_user()
+    return redirect(url_for('auth.login'))

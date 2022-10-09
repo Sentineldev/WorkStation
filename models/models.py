@@ -1,6 +1,6 @@
-from enum import unique
-from sqlalchemy import ForeignKey
 from database.database import db
+
+from flask_login import UserMixin
 
 class Person(db.Model):
         person_id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +17,7 @@ class Person(db.Model):
 
 
 
-class User(db.Model):
+class User(UserMixin,db.Model):
         user_id = db.Column(db.Integer, primary_key=True)
         person_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))
         username = db.Column(db.String(32), nullable=False,unique=True)
@@ -27,12 +27,20 @@ class User(db.Model):
         def __repr__(self) -> str:
               return f"{self.username} {self.user_id}"
 
-        def toDict(self):
+        def toDict(self) -> dict:
                 return {
                         "username":self.username,
                         "user_id":self.user_id,
                         "person_id":self.person_id
                 }
+
+
+        """
+        Override of the UserMxin method get_id
+        
+        """
+        def get_id(self) -> int:
+                return self.user_id
         
 class Phone(db.Model):
     person_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))

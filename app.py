@@ -1,17 +1,28 @@
-from flask import Flask,url_for,redirect,session,render_template
+from flask import Flask,url_for,redirect,render_template
 
 from dotenv import load_dotenv
 from config  import Config
 
-from database.database import init_app
+
+
+
+from flask_login import  login_required
+
+
+from database import database
+import login_manager
 
 from routes import Auth
+
+
 
 def create_app():
 
 
     app = Flask(__name__)
+
     
+
 
     #loading enviroment variables '.env file'.
     load_dotenv()
@@ -26,7 +37,8 @@ def create_app():
 
 
     #Connecting the ORM with the  flask app. ALSO adding the CLI command.
-    init_app(app)
+    database.init_app(app)
+    login_manager.init_app(app)
 
 
     app.register_blueprint(Auth.bp)
@@ -38,10 +50,16 @@ def create_app():
 
         return redirect(url_for('auth.login'))
 
+
+    """
+    TESTING login_required decorator.
+    
+    """
+
     @app.route("/home",methods=['GET'])
+    @login_required
     def home():
-        user = session.get("current_user")
-        return render_template("home/home.html",user=user)
+        return render_template("home/home.html")
 
 
     return app
