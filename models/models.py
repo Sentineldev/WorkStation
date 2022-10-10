@@ -32,7 +32,7 @@ class User(UserMixin,db.Model):
     person_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))
     username = db.Column(db.String(32), nullable=False,unique=True)
     password = db.Column(db.String(128), nullable=False)
-    registered_at = db.relationship('Registered', backref= 'user', lazy= True)
+    member_at = db.relationship('RoomMember', backref= 'user', lazy= True)
 
     def __init__(self, person_id= None, username= None, password= None) -> None:
         super().__init__()
@@ -75,9 +75,7 @@ class Room(db.Model):
     profesor_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
-    posts = db.relationship('Post', backref= 'room', lazy= True)
-    assignaments = db.relationship('Assignament', backref= 'room', lazy= True)
-    registered_students = db.relationship('Registered', backref= 'room', lazy= True)
+    members = db.relationship('RoomMember', backref= 'room', lazy= True)
 
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key= True)
@@ -87,7 +85,6 @@ class Post(db.Model):
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
-    belong_at = db.relationship('Belong', backref= 'post', lazy= True)
 
 class Assignament(db.Model):
     assignament_id = db.Column(db.Integer, primary_key= True)
@@ -98,19 +95,8 @@ class Assignament(db.Model):
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
     expiration_date = db.Column(db.Date, nullable= False)
-    assign_at = db.relationship('Assign', backref= 'assignament', lazy= True)
 
-class Registered(db.Model):
-    registered_id = db.Column(db.Integer, primary_key= True)
+class RoomMember(db.Model):
+    room_member_id = db.Column(db.Integer, primary_key= True)
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
-    
-class Assign(db.Model):
-    assign_id = db.Column(db.Integer, primary_key= True)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
-    assignament_id = db.Column(db.Integer, db.ForeignKey('assignament.assignament_id'))
-    
-class Belong(db.Model):
-    belong_id = db.Column(db.Integer, primary_key= True)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
-    post_id = db.Column(db.Integer, db.ForeignKey('post.post_id'))
