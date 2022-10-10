@@ -46,66 +46,8 @@ def login():
 @bp.route("/register",methods=['GET','POST'])
 def register():
 
-    if request.method == "POST":    
 
-        #obtainng form data.
-        username = request.form['username']
-        password = request.form['password']
-
-        name = request.form['name']
-        last_name = request.form['last_name']
-        country = request.form['country']
-        birth_date = request.form['birth_date']
-        phone = request.form['phone']
-        email = request.form['email']
-
-
-        """
-        Checking if the email and the username exists in the database.
-
-        if not response message
-        else 
-        1. Create the person
-        2. Querying to get the person auto generate id
-        3. saving the phone along with the person's id
-        4. created a new user along with the person's id
-
-        also the password is save with a hash function
-        
-        """
-
-        if Person.query.filter_by(email=email).first() is not None:
-            flash("Email already exists")
-        elif User.query.filter_by(username=username).first() is not None:
-            flash("Username already exists")
-        else:
-            new_person = Person()
-            new_person.first_name = name
-            new_person.last_name = last_name
-            new_person.country = country
-            new_person.birthdate = birth_date
-            new_person.email = email
-
-            db.session.add(new_person)
-            db.session.commit()
-
-            addeed_person = Person.query.filter_by(email=email).first()
             
-            new_phone = Phone()
-            new_phone.person_id = addeed_person.person_id
-            new_phone.phone_number = phone
-            db.session.add(new_phone)
-            db.session.commit()
-
-            new_user = User()
-            new_user.person_id = addeed_person.person_id
-            new_user.username = username
-            new_user.password = generate_password_hash(password)
-
-            db.session.add(new_user)
-            db.session.commit()
-
-            flash("User registered successfully")
 
     return render_template("auth/register.html")
 
