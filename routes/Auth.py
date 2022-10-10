@@ -45,10 +45,71 @@ def login():
 
 @bp.route("/register",methods=['GET','POST'])
 def register():
-
+    """"""
     if request.method == 'POST':
-        """"""
-        pass
+        
+        # User data 
+        username = request.form['username']
+        password = request.form['password']
+        
+        # Person data
+        name = request.form['name']
+        last_name = request.form['last_name']
+        email= request.form['email']
+        country = request.form['country']
+        birthdate = request.form['birth_date']
+        
+        # Phone number
+        phone_number = request.form['phone']
+        
+        """We verify if the email or the username exists, if not exists then:
+            
+            1. We create a Person with the person data
+            2. We query that person_id
+            3. We create a User with the user data and the person_id
+            4. We create a Phone with the phone number and the person_id
+        """
+        
+        if Person.query(email=email).first() is not None:
+            return flash("Email already registered!")
+        elif User.query(username=username).first() is not None:
+            return flash("Username already exists!")
+        else:
+            
+            # Create the new person
+            new_person = Person(
+                first_name= name,
+                last_name= last_name,
+                birthdate= birthdate,
+                country= country,
+                email= email
+            )
+            
+            db.session.add(new_person)
+            db.session.commit()
+            
+            # We get the person_id of the person reciently created
+            
+            new_person_id = Person.query(email=email).first().person_id
+            
+            # Create the new user
+            new_user = User(
+                person_id= new_person_id,
+                username= username,
+                password= generate_password_hash(password)
+            )
+            
+            db.session.add(new_user)
+            db.session.commit()
+            
+            # Create the new phone
+            new_phone = Phone(
+                person_id= new_person_id,
+                phone_number= phone_number
+            )
+            
+            db.session.add(new_phone)
+            db.session.commit()
             
     return render_template("auth/register.html")
 
