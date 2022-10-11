@@ -70,10 +70,10 @@ def register():
             4. We create a Phone with the phone number and the person_id
         """
         
-        if Person.query(email=email).first() is not None:
-            return flash("Email already registered!")
-        elif User.query(username=username).first() is not None:
-            return flash("Username already exists!")
+        if db.session.execute(db.select(Person).filter_by(email=email)).first() is not None:
+            flash("Email already registered!")
+        elif db.session.execute(db.select(User).filter_by(username=username)).first() is not None:
+            flash("Username already exists!")
         else:
             
             # Create the new person
@@ -88,13 +88,13 @@ def register():
             db.session.add(new_person)
             db.session.commit()
             
-            # We get the person_id of the person reciently created
+            # We get the  person reciently created
             
-            new_person_id = Person.query(email=email).first().person_id
+            person_row = db.session.execute(db.select(Person).filter_by(email=email)).first()
             
             # Create the new user
             new_user = User(
-                person_id= new_person_id,
+                person_id= person_row.Person.person_id,
                 username= username,
                 password= generate_password_hash(password)
             )
@@ -104,7 +104,7 @@ def register():
             
             # Create the new phone
             new_phone = Phone(
-                person_id= new_person_id,
+                person_id= person_row.Person.person_id,
                 phone_number= phone_number
             )
             
