@@ -68,7 +68,7 @@ class Phone(db.Model):
 
 class Room(db.Model):
     room_id = db.Column(db.Integer, primary_key= True)
-    room_code = db.Column(db.String(32), unique= True)
+    room_code = db.Column(db.String(36), unique= True,nullable=False)
     room_title = db.Column(db.String(64), nullable= False)
     room_description = db.Column(db.String(512))
     student_count = db.Column(db.Integer)
@@ -79,7 +79,7 @@ class Room(db.Model):
 
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key= True)
-    post_code = db.Column(db.String(32), unique= True)
+    post_code = db.Column(db.String(36), unique= True)
     post_title = db.Column(db.String(64), nullable= False)
     post_description = db.Column(db.String(8192))
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
@@ -88,7 +88,7 @@ class Post(db.Model):
 
 class Assignament(db.Model):
     assignament_id = db.Column(db.Integer, primary_key= True)
-    assignament_code = db.Column(db.String(32), unique= True)
+    assignament_code = db.Column(db.String(36), unique= True)
     assignament_title = db.Column(db.String(64), nullable= False)
     assignament_description = db.Column(db.String(8192))
     room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
@@ -98,5 +98,5 @@ class Assignament(db.Model):
 
 class RoomMember(db.Model):
     room_member_id = db.Column(db.Integer, primary_key= True)
-    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'),nullable=False)
+    user = db.Column(db.String(32), db.ForeignKey('user.username'),nullable=False)

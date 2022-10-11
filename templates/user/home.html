@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/home.css')}}">
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<h1 class="title-h1">Welcome! {{current_user.username}} </h1>
+
+<nav class="navbar">
+    <ul class="nav-list">
+        <li class="nav-list-item">
+            <a href="{{url_for('user.create_room')}}" class="nav-link">Create Room</a>
+        </li>
+        <li class="nav-list-item">
+            <a href="{{url_for('auth.logout')}}" class="nav-link">Logout</a>
+        </li>
+        
+        
+    </ul>
+</nav>
+
+
+
+
+
+
+<div class="rooms-container">
+
+    {% for room in user_rooms %}
+        <div class="room">
+            <div class="room-title-container">
+                <a href="#" class="room-link">{{room[0].room_title}}</a>
+            </div>
+        </div>
+    {% endfor %}
+    
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+
+
+.nav-list{
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    width: 400px;
+    padding: 1rem;
+    margin: 2rem auto;
+    border-bottom: 2px solid #aaaa;
+}
+.nav-link{
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: rgb(55, 55, 83);
+}
+.nav-link:hover{
+    text-decoration: underline;
+}

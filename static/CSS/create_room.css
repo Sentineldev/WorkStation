@@ -1,0 +1,30 @@
+#form{
+    width: 45%;
+    background-color: rgb(214, 210, 210);
+    border-radius: 0.4rem;
+}
+
+.header-container{
+    padding: 1rem;
+}
+.input-container,.button-container{
+    padding: 1rem;
+}
+
+
+.button-container button{
+    padding: 1rem 6rem;
+}
+.flash-message-container{
+    margin: 1rem;    
+}
+textarea{
+    resize: none;
+}
+@media(max-width:1400px){
+
+    #form{
+        width: 100%;
+    }
+    
+}

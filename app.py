@@ -12,7 +12,7 @@ from flask_login import  login_required
 from database import database
 import login_manager
 
-from routes import Auth
+from routes import Auth,User
 
 
 
@@ -42,24 +42,15 @@ def create_app():
 
 
     app.register_blueprint(Auth.bp)
+    app.register_blueprint(User.bp)
 
 
     @app.route("/",methods=['GET',"POST"])
     def index():
-
-
         return redirect(url_for('auth.login'))
 
 
-    """
-    TESTING login_required decorator.
-    
-    """
-
-    @app.route("/home",methods=['GET'])
-    @login_required
-    def home():
-        return render_template("home/home.html")
+ 
 
 
     return app

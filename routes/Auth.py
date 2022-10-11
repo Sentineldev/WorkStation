@@ -27,15 +27,15 @@ def login():
         """
         user = User.query.filter_by(username=username).first()
         if user is None:
-            flash("Wrong credentials")
+            flash("Wrong credentials.")
         elif not check_password_hash(user.password,password) : #checking if the hashed password matches with the password
-            flash("Wrong credentials")
+            flash("Wrong credentials.")
         else:
             """
             login user.
             """
             login_user(user)
-            return redirect(url_for('home')) 
+            return redirect(url_for('user.home')) 
         
         
     return render_template("auth/login.html")
@@ -110,6 +110,8 @@ def register():
             
             db.session.add(new_phone)
             db.session.commit()
+
+            flash("Successfully registered.")
             
     return render_template("auth/register.html")
 
