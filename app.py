@@ -12,7 +12,7 @@ from flask_login import  login_required
 from database import database
 import login_manager
 
-from routes import Auth,User
+from routes import Auth,User,Room
 
 
 
@@ -43,6 +43,7 @@ def create_app():
 
     app.register_blueprint(Auth.bp)
     app.register_blueprint(User.bp)
+    app.register_blueprint(Room.bp)
 
 
     @app.route("/",methods=['GET',"POST"])

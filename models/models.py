@@ -10,7 +10,7 @@ class Person(db.Model):
     last_name = db.Column(db.String(32), nullable=False)
     country = db.Column(db.String(32), nullable=False)
     birthdate = db.Column(db.Date, nullable=False)
-    email = db.Column(db.String(128),unique=True)
+    email = db.Column(db.String(128),unique=True, nullable=False)
     phones = db.relationship('Phone', backref= 'person', lazy= True)
 
     def __init__(self, first_name= None, last_name= None, country= None, 
@@ -75,7 +75,7 @@ class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key= True)
     post_code = db.Column(db.String(36), unique= True)
     post_title = db.Column(db.String(64), nullable= False)
-    post_description = db.Column(db.String(8192))
+    post_description = db.Column(db.String(8192), nullable= False)
     room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Create Post</title>
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/auth.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/create_room.css')}}">
+{% endblock %}
+
+
+
+{% block content %}
+
+<nav class="navbar">
+    <ul class="nav-list">
+        <li class="nav-list-item">
+            <a href="{{url_for('user.home')}}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-list-item">
+            <a href="{{url_for('room.create_post', actual_room_code=room_code)}}" class="nav-link">Create Post</a>
+        </li>
+        <li class="nav-list-item">
+            <a href="{{url_for('auth.logout')}}" class="nav-link">Logout</a>
+        </li>
+        
+        
+    </ul>
+</nav>
+<div id="form-container">
+    <form id="form" action="/room/{{room_code}}/create_post" method="POST">
+    
+        <div class="header-container">
+            <h1 class="title-h1">Create Post</h1>
+        </div>
+
+
+        <div class="input-container">
+            <label for="post_title" class="input-label">Title</label>
+            <input name="post_title" id="post_title" type="text" class="input-entry">
+        </div>
+        
+        <div class="input-container">
+            <label for="post_title" class="input-label">Description</label>
+            <textarea class="input-entry" name="post_description" id="post_description" cols="30" rows="10"></textarea>
+        </div>
+
+        
+        <div class="button-container">
+            <button class="button" type="submit">Crear</button>
+        </div>
+
+        
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message-container">
+                <p class="flash-message">{{message}}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+    </form>
+</div>
+
+{% endblock %}
+
+
+
+{% block script %}
+{% endblock %}

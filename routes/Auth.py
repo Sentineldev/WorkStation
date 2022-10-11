@@ -16,7 +16,7 @@ bp = Blueprint("auth",__name__,url_prefix="/auth")
 def login():
 
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('user.home'))
     if request.method == "POST":
         #obtaining form data.
         username = request.form['username']

@@ -63,13 +63,33 @@ def ValidateCreateRoomForm(form) -> dict:
     room_description : str = form['room_description']
 
     if not (len(room_title) > 0 and len(room_title) <= 64):
-        return {"message":"Room title must contain > 0 characters and <= 64 characters","status":False}
+        return {"message":"Room title must contain > 0 characters and <= 64 characters","status": False}
     elif not (len(room_description) <= 512):
         return {"message":"Room Description must contain <= 512 characters","status":False}
     else:
         return {"message":"","status":True}
 
 
+def ValidateCreatePostForm(form) -> dict:
+    """
+    Checks that the post tittle it's not empty and it's length 
+    is less than 64.
+
+    Also check if the post description it's not empty and if lenght 
+    is not greater than 8192.
+
+    return: dict with a message: str and a status: bool
+    """
+
+    post_title : str = form['post_title']
+    post_description : str = form['post_description']
+
+    if not(len(post_title) > 0 and len(post_title) <= 64):
+        return {"message": "Post title must contains > 0 characters and <= 64 characters", "status": False}
+    elif not(len(post_description) > 0 and len(post_description) <= 8192):
+        return {"message": "Post description must contains > 0 characters and <= 8192 characters", "status": False}
+    else:
+        return {"message": "", "status": True}
 
 def ValidateRegisterUserForm(form) -> dict:
 
