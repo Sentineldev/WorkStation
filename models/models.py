@@ -29,26 +29,20 @@ class Person(db.Model):
 
 class User(UserMixin,db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
-    person_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))
+    person_email = db.Column(db.String(128), db.ForeignKey('person.email'))
     username = db.Column(db.String(32), nullable=False,unique=True)
     password = db.Column(db.String(128), nullable=False)
     member_at = db.relationship('RoomMember', backref= 'user', lazy= True)
 
-    def __init__(self, person_id= None, username= None, password= None) -> None:
+    def __init__(self, person_email= None, username= None, password= None) -> None:
         super().__init__()
-        self.person_id = person_id
+        self.person_email = person_email
         self.username = username
         self.password = password
         
     def __repr__(self) -> str:
         return f"{self.username} {self.user_id}"
 
-    def toDict(self) -> dict:
-        return {
-            "username":self.username,
-            "user_id":self.user_id,
-            "person_id":self.person_id
-        }
 
 
     """
@@ -58,12 +52,12 @@ class User(UserMixin,db.Model):
         return self.user_id
         
 class Phone(db.Model):
-    person_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))
+    person_email = db.Column(db.String(128), db.ForeignKey('person.email'))
     phone_number = db.Column(db.String(16), primary_key=True)
     
-    def __init__(self, person_id= None, phone_number= None) -> None:
+    def __init__(self, person_email= None, phone_number= None) -> None:
         super().__init__()
-        self.person_id = person_id
+        self.person_email = person_email
         self.phone_number = phone_number
 
 class Room(db.Model):
@@ -72,7 +66,7 @@ class Room(db.Model):
     room_title = db.Column(db.String(64), nullable= False)
     room_description = db.Column(db.String(512))
     student_count = db.Column(db.Integer)
-    profesor_id = db.Column(db.Integer, db.ForeignKey('person.person_id'))
+    profesor_email = db.Column(db.String(128), db.ForeignKey('person.email'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
     members = db.relationship('RoomMember', backref= 'room', lazy= True)
@@ -82,7 +76,7 @@ class Post(db.Model):
     post_code = db.Column(db.String(36), unique= True)
     post_title = db.Column(db.String(64), nullable= False)
     post_description = db.Column(db.String(8192))
-    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
+    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
 
@@ -91,12 +85,12 @@ class Assignament(db.Model):
     assignament_code = db.Column(db.String(36), unique= True)
     assignament_title = db.Column(db.String(64), nullable= False)
     assignament_description = db.Column(db.String(8192))
-    room_id = db.Column(db.Integer, db.ForeignKey('room.room_id'))
+    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
     expiration_date = db.Column(db.Date, nullable= False)
 
 class RoomMember(db.Model):
     room_member_id = db.Column(db.Integer, primary_key= True)
-    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'),nullable=False)
-    user = db.Column(db.String(32), db.ForeignKey('user.username'),nullable=False)
+    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
+    username = db.Column(db.String(32), db.ForeignKey('user.username'))

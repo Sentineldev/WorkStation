@@ -7,6 +7,8 @@ from database.database import db
 
 from models.models import User,Person,Phone
 
+from .validations import ValidateCreateRoomForm, ValidateRegisterUserForm
+
 bp = Blueprint("auth",__name__,url_prefix="/auth")
 
 
@@ -25,7 +27,9 @@ def login():
         logging the user if the credentials match with any row in the db.
         
         """
-        user = User.query.filter_by(username=username).first()
+
+
+        user = db.session.execute(db.select(User).filter_by(username=username)).first()[0]
         if user is None:
             flash("Wrong credentials.")
         elif not check_password_hash(user.password,password) : #checking if the hashed password matches with the password
@@ -48,70 +52,75 @@ def register():
     """"""
     if request.method == 'POST':
         
-        # User data 
-        username = request.form['username']
-        password = request.form['password']
-        
-        # Person data
-        name = request.form['name']
-        last_name = request.form['last_name']
-        email= request.form['email']
-        country = request.form['country']
-        birthdate = request.form['birth_date']
-        
-        # Phone number
-        phone_number = request.form['phone']
-        
-        """We verify if the email or the username exists, if not exists then:
-            
-            1. We create a Person with the person data
-            2. We query that person_id
-            3. We create a User with the user data and the person_id
-            4. We create a Phone with the phone number and the person_id
         """
+        Validates that all the fields have the correct format and length.
         
-        if db.session.execute(db.select(Person).filter_by(email=email)).first() is not None:
-            flash("Email already registered!")
-        elif db.session.execute(db.select(User).filter_by(username=username)).first() is not None:
-            flash("Username already exists!")
-        else:
-            
-            # Create the new person
-            new_person = Person(
-                first_name= name,
-                last_name= last_name,
-                birthdate= birthdate,
-                country= country,
-                email= email
-            )
-            
-            db.session.add(new_person)
-            db.session.commit()
-            
-            # We get the  person reciently created
-            
-            person_row = db.session.execute(db.select(Person).filter_by(email=email)).first()
-            
-            # Create the new user
-            new_user = User(
-                person_id= person_row.Person.person_id,
-                username= username,
-                password= generate_password_hash(password)
-            )
-            
-            db.session.add(new_user)
-            db.session.commit()
-            
-            # Create the new phone
-            new_phone = Phone(
-                person_id= person_row.Person.person_id,
-                phone_number= phone_number
-            )
-            
-            db.session.add(new_phone)
-            db.session.commit()
+        """
 
-            flash("Successfully registered.")
+        form_validation = ValidateRegisterUserForm(request.form)
+        if form_validation['status']:
+            # User data 
+            username = request.form['username']
+            password = request.form['password']
+            
+            # Person data
+            name = request.form['name']
+            last_name = request.form['last_name']
+            email= request.form['email']
+            country = request.form['country']
+            birthdate = request.form['birth_date']
+            
+            # Phone number
+            phone_number = request.form['phone']
+            
+            """We verify if the email or the username exists, if not exists then:
+                
+                1. We create a Person with the person data
+                2. We query that person_id
+                3. We create a User with the user data and the person_id
+                4. We create a Phone with the phone number and the person_id
+            """
+            
+            if db.session.execute(db.select(Person).filter_by(email=email)).first() is not None:
+                flash("Email already registered!")
+            elif db.session.execute(db.select(User).filter_by(username=username)).first() is not None:
+                flash("Username already exists!")
+            else:
+                
+                # Create the new person
+                new_person = Person(
+                    first_name= name,
+                    last_name= last_name,
+                    birthdate= birthdate,
+                    country= country,
+                    email= email
+                )
+                
+                db.session.add(new_person)
+                db.session.commit()
+                
+                # Create the new user
+                new_user = User(
+                    person_email= email,
+                    username= username,
+                    password= generate_password_hash(password)
+                )
+                
+                db.session.add(new_user)
+                db.session.commit()
+                
+                # Create the new phone
+                new_phone = Phone(
+                    person_email= email,
+                    phone_number= phone_number
+                )
+                
+                db.session.add(new_phone)
+                db.session.commit()
+
+                flash("Successfully registered.")
+        else:
+            flash(form_validation['message'])
             
     return render_template("auth/register.html")
 
