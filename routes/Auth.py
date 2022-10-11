@@ -88,13 +88,9 @@ def register():
             db.session.add(new_person)
             db.session.commit()
             
-            # We get the  person reciently created
-            
-            person_row = db.session.execute(db.select(Person).filter_by(email=email)).first()
-            
             # Create the new user
             new_user = User(
-                person_id= person_row.Person.person_id,
+                person_email= email,
                 username= username,
                 password= generate_password_hash(password)
             )
@@ -104,7 +100,7 @@ def register():
             
             # Create the new phone
             new_phone = Phone(
-                person_id= person_row.Person.person_id,
+                person_email= email,
                 phone_number= phone_number
             )
             
