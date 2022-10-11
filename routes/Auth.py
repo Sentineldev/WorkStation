@@ -7,7 +7,7 @@ from database.database import db
 
 from models.models import User,Person,Phone
 
-from .validations import ValidateCreateRoomForm, ValidateRegisterUserForm
+from utils.validations import ValidateCreateRoomForm, ValidateRegisterUserForm
 
 bp = Blueprint("auth",__name__,url_prefix="/auth")
 

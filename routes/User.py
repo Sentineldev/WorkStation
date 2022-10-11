@@ -5,7 +5,7 @@ from models.models import RoomMember,Room
 from  uuid import uuid4
 from datetime import datetime
 
-from .validations import ValidateCreateRoomForm
+from utils.validations import ValidateCreateRoomForm
 
 bp = Blueprint("user",__name__,url_prefix="/user")
 
