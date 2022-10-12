@@ -80,11 +80,12 @@ class Post(db.Model):
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
 
-class Assignament(db.Model):
-    assignament_id = db.Column(db.Integer, primary_key= True)
-    assignament_code = db.Column(db.String(36), unique= True)
-    assignament_title = db.Column(db.String(64), nullable= False)
-    assignament_description = db.Column(db.String(8192))
+class Assignment(db.Model):
+    assignment_id = db.Column(db.Integer, primary_key= True)
+    assignment_code = db.Column(db.String(36), unique= True)
+    assignment_title = db.Column(db.String(64), nullable= False)
+    assignment_description = db.Column(db.String(8192))
+    assignment_ponderation = db.Column(db.Integer, nullable=False)
     room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)

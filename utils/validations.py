@@ -34,13 +34,12 @@ def validateDate(date:str) -> bool:
     return: bool
     
     """
-
-    splitted_date = date.split("/")
+    splitted_date = date.split("-")
     if not (len(splitted_date) == 3):
         return False
     elif not(isInteger(splitted_date[0]) and isInteger(splitted_date[1]) and isInteger(splitted_date[2]) ):
         return False
-    elif not ( len(str(splitted_date[0])) == 4 and len(str(splitted_date[1])) == 2 and len(str(splitted_date[2])) == 2   ):
+    elif not ( len(str(splitted_date[0])) == 4 and len(str(splitted_date[1])) == 2 and len(str(splitted_date[2])) == 2):
         return False
     else:
         return True
@@ -90,6 +89,40 @@ def ValidateCreatePostForm(form) -> dict:
         return {"message": "Post description must contains > 0 characters and <= 8192 characters", "status": False}
     else:
         return {"message": "", "status": True}
+    
+
+def ValidateCreateAssignmentForm(form):
+    """
+    Check that the assignment tittle it's not empty and it's length
+    is less than 64.
+    
+    Check if the assignment description it's not empty and if length
+    is not greater than 8192.
+    
+    Check that the expiration date it in the correct format. 
+    
+    Also check if the assignment ponderation it's not empty and 
+    not greater than 100.
+
+    return: dict with a message: str and a status: bool
+    """
+    
+    assignment_title : str = form['assignment_title']
+    assignment_description : str = form['assignment_description']
+    assignment_ponderation : int = int(form['assignment_ponderation'])
+    expiration_date : str = form['expiration_date']
+    
+    if not(len(assignment_title) > 0 and len(assignment_title) <= 64):
+        return {"message": "Assignment title must contains > 0 characters and <= 64 characters", "status": False}
+    elif not(len(assignment_description) > 0 and len(assignment_description) <= 8192):
+        return {"message": "Assignment description must contains > 0 characters and <= 8192 characters", "status": False}
+    elif not(assignment_ponderation >= 5 and assignment_ponderation <= 100):
+        return {"message": "Assignment ponderation must have >= 5 percent and <= 100 percent", "status": False}
+    elif not(validateDate(expiration_date)):
+        return {"message":"Invalid Date format must be YYYY/MM/DD","status":False}
+    else:
+        return {"message": "", "status": True}
+
 
 def ValidateRegisterUserForm(form) -> dict:
 

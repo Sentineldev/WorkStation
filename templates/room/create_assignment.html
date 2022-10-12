@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+
+
+{% block head %}
+
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/auth.css')}}">
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/register.css')}}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<nav class="navbar">
+    <ul class="nav-list">
+        <li class="nav-list-item">
+            <a href="{{url_for('user.home')}}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-list-item">
+            <a href="{{url_for('auth.logout')}}" class="nav-link">Logout</a>
+        </li>
+        
+        
+    </ul>
+</nav>
+<div id="form-container">
+    <form id="login-form" action="/room/{{room_code}}/create_assignment" method="POST">
+    
+        <div class="header-container">
+            <h1 class="title-h1">Create Assignment</h1>
+        </div>
+
+        <div class="form-grid">
+            <div class="input-container">
+                <label for="assignment_title" class="input-label">Assignment Title</label>
+                <input name="assignment_title" id="assignment_title" type="text" class="input-entry">
+            </div>
+            <div class="input-container">
+                <label for="assignment_description" class="input-label">Description</label>
+                <input name="assignment_description" id="assignment_description" type="textarea" class="input-entry">
+            </div>
+        </div>
+
+        <div class="form-grid">
+            <div class="input-container">
+                <label for="assignment_ponderation" class="input-label">Ponderation</label>
+                <input name="assignment_ponderation" id="assignment_ponderation" type="text" class="input-entry">
+            </div>
+            <div class="input-container">
+                <label for="expiration_date" class="input-label">Expiration date</label>
+                <input name="expiration_date" id="expiration_date" type="date" class="input-entry">
+            </div>
+
+            
+        </div>
+        <div class="button-container">
+            <button class="button" type="submit">Submit</button>
+        </div>
+       
+        
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message-container">
+                <p class="flash-message">{{message}}</p>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+    </form>
+</div>
+
+{% endblock %}
+
+
+
+{% block scripts %}
+{% endblock %}

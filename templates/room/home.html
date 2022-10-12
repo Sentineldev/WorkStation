@@ -19,6 +19,9 @@
             <a href="{{url_for('room.create_post', actual_room_code=room_parameters['room_code'])}}" class="nav-link">Create Post</a>
         </li>
         <li class="nav-list-item">
+            <a href="{{url_for('room.create_assignment', actual_room_code=room_parameters['room_code'])}}" class="nav-link">Create Assignment</a>
+        </li>
+        <li class="nav-list-item">
             <a href="{{url_for('auth.logout')}}" class="nav-link">Logout</a>
         </li>
     </ul>
