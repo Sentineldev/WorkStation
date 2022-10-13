@@ -4,6 +4,7 @@
 {% block head %}
 <title>Home</title>
 <link rel="stylesheet" href="{{url_for('static',filename='CSS/home.css')}}"></link>
+<link rel="stylesheet" href="{{url_for('static',filename='CSS/room_home.css')}}">
 {% endblock %}
 
 
@@ -22,6 +23,9 @@
             <a href="{{url_for('room.create_assignment', actual_room_code=room_parameters['room_code'])}}" class="nav-link">Create Assignment</a>
         </li>
         <li class="nav-list-item">
+            <a href="{{url_for('user.home')}}" class="nav-link">Home</a>
+        </li>
+        <li class="nav-list-item">
             <a href="{{url_for('auth.logout')}}" class="nav-link">Logout</a>
         </li>
     </ul>
@@ -29,23 +33,57 @@
 </nav>
 
 
-
-
-
-
-
-
-<div class="rooms-container">
-
-    {% for post in room_parameters["posts"] %}
-        <div class="room">
-            <div class="room-title-container">
-                <a href="#" class="room-link"> {{post[0].post_title}}</a>
-            </div>
+<div class="body">
+    <div class="post-container">
+        <div class="post-title-container">
+            <h1 class="post-title">{{room_parameters['room'].room_title}}</h1>
         </div>
-    {% endfor %}
-
-
+        <div class="post-body-container">
+            <pre class="post-body">{{room_parameters['room'].room_description}}</pre>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+<section class="room-section">
+    {% if room_parameters['posts'] == [] %}
+        <h1 class="title-h1">No posts registered</h1>
+    {% else %}
+        <h1 class="title-h1">Posts</h1>
+    {% endif %}
+    <div class="rooms-container">
+        {% for post in room_parameters["posts"] %}
+            <div class="room">
+                <div class="room-title-container">
+                    <a href="{{url_for('room.post',post_code=post[0].post_code)}}" class="room-link"> {{post[0].post_title}}</a>
+                </div>
+            </div>
+            
+        {% endfor %}
+    </div>
+</section>
+
+<section class="room-section">
+    {% if room_parameters['assignments'] == [] %}
+        <h1 class="title-h1">No asssignments registered</h1>
+    {% else %}
+        <h1 class="title-h1">Assignments</h1>
+    {% endif %}
+    
+    <div class="rooms-container">
+        {% for assignment in room_parameters["assignments"] %}
+            <div class="room">
+                <div class="room-title-container">
+                    <a href="{{url_for('room.assignment',assignment_code=assignment[0].assignment_code)}}" class="room-link"> {{assignment[0].assignment_title}}</a>
+                </div>
+            </div>
+            
+        {% endfor %}
+    </div>
+</section>
+
 
 {% endblock %}

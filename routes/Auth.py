@@ -29,16 +29,16 @@ def login():
         """
 
 
-        user = db.session.execute(db.select(User).filter_by(username=username)).first()[0]
+        user = db.session.execute(db.select(User).filter_by(username=username)).first()
         if user is None:
             flash("Wrong credentials.")
-        elif not check_password_hash(user.password,password) : #checking if the hashed password matches with the password
+        elif not check_password_hash(user[0].password,password) : #checking if the hashed password matches with the password
             flash("Wrong credentials.")
         else:
             """
             login user.
             """
-            login_user(user)
+            login_user(user[0])
             return redirect(url_for('user.home')) 
         
         

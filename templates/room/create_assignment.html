@@ -20,7 +20,9 @@
         <li class="nav-list-item">
             <a href="{{url_for('auth.logout')}}" class="nav-link">Logout</a>
         </li>
-        
+        <li class="nav-list-item">
+            <a href="{{url_for('room.home',actual_room_code=room_code)}}" class="nav-link">Back to Room</a>
+        </li>
         
     </ul>
 </nav>

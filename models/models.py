@@ -1,6 +1,4 @@
-from enum import unique
 from database.database import db
-from uuid import uuid3
 
 from flask_login import UserMixin
 
@@ -33,6 +31,7 @@ class User(UserMixin,db.Model):
     username = db.Column(db.String(32), nullable=False,unique=True)
     password = db.Column(db.String(128), nullable=False)
     member_at = db.relationship('RoomMember', backref= 'user', lazy= True)
+    comment = db.relationship("Comment",backref='user',lazy=True)
 
     def __init__(self, person_email= None, username= None, password= None) -> None:
         super().__init__()
@@ -71,6 +70,12 @@ class Room(db.Model):
     created_at_time = db.Column(db.Time, nullable= False)
     members = db.relationship('RoomMember', backref= 'room', lazy= True)
 
+
+class RoomMember(db.Model):
+    room_member_id = db.Column(db.Integer, primary_key= True)
+    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
+    username = db.Column(db.String(32), db.ForeignKey('user.username'))
+
 class Post(db.Model):
     post_id = db.Column(db.Integer, primary_key= True)
     post_code = db.Column(db.String(36), unique= True)
@@ -79,6 +84,9 @@ class Post(db.Model):
     room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
     created_at_date = db.Column(db.Date, nullable= False)
     created_at_time = db.Column(db.Time, nullable= False)
+    comments = db.relationship('PostComment', backref= 'post', lazy= True)
+
+
 
 class Assignment(db.Model):
     assignment_id = db.Column(db.Integer, primary_key= True)
@@ -91,7 +99,34 @@ class Assignment(db.Model):
     created_at_time = db.Column(db.Time, nullable= False)
     expiration_date = db.Column(db.Date, nullable= False)
 
-class RoomMember(db.Model):
-    room_member_id = db.Column(db.Integer, primary_key= True)
-    room_code = db.Column(db.String(36), db.ForeignKey('room.room_code'))
-    username = db.Column(db.String(32), db.ForeignKey('user.username'))
+    comments = db.relationship('AssignmentComment', backref= 'assignment', lazy= True)
+
+
+
+class Comment(db.Model):
+    comment_id = db.Column(db.Integer,primary_key=True)
+    comment_code = db.Column(db.String(36),nullable=False,unique=True) 
+    comment_body = db.Column(db.String(1024),nullable=False)
+    username = db.Column(db.String(32),db.ForeignKey('user.username'))
+    created_at_date =  db.Column(db.Date,nullable=False)
+    created_at_time = db.Column(db.Time,nullable=False)
+
+    comments_at_post = db.relationship('PostComment', backref= 'comment', lazy= True)
+    comments_at_assignment = db.relationship('AssignmentComment', backref= 'comment', lazy= True)
+
+
+
+class PostComment(db.Model):
+    post_comment_id = db.Column(db.Integer,primary_key=True)
+    post_code = db.Column(db.String(36),db.ForeignKey('post.post_code'))
+    comment_code = db.Column(db.String(36),db.ForeignKey('comment.comment_code'))
+
+
+class AssignmentComment(db.Model):
+    assignment_comment_id = db.Column(db.Integer,primary_key=True)
+    assignment_code = db.Column(db.String(36),db.ForeignKey('assignment.assignment_code'))
+    comment_code = db.Column(db.String(36),db.ForeignKey('comment.comment_code'))
+
+
+
+

@@ -3,18 +3,26 @@
 .nav-list{
     list-style: none;
     display: flex;
-    gap: 30px;
     justify-content: center;
-    width: 400px;
     padding: 1rem;
     margin: 2rem auto;
-    border-bottom: 2px solid #aaaa;
 }
+
 .nav-link{
     font-size: 1.8rem;
     text-decoration: none;
     color: rgb(55, 55, 83);
+    border-bottom: 2px solid #aaaa;
+    padding: 0.8rem 2rem;
 }
 .nav-link:hover{
     text-decoration: underline;
+}
+
+@media(max-width:1000px){
+    .nav-list{
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
 }

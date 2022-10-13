@@ -1,0 +1,25 @@
+
+.body{
+    width: 600px;
+    margin: 0 auto;
+
+}
+.post-container{
+    width: 100%;
+    border: 2px solid #aaaa;
+}
+
+.post-title{
+    font-size: clamp(2.8rem,2.4vh,3.2rem);
+    border-bottom: 1px solid #aaaa;
+    padding: 1rem;
+    background-color: rgb(221, 220, 220);
+}
+
+.post-body{
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: clamp(1.6rem,2.4vh,1.8rem);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
